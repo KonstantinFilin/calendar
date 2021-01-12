@@ -1,6 +1,6 @@
 <?php
 
-namespace kfilin\Calendar\ru;
+namespace Kfilin\Calendar\ru;
 
 class Month extends \kfilin\Calendar\Month
 {
@@ -16,7 +16,7 @@ class Month extends \kfilin\Calendar\Month
             7 => "Вс",
         ];
     }
-    
+
     public function getWeekdayNames()
     {
         return [

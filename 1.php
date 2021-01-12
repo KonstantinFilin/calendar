@@ -2,7 +2,7 @@
 
 require "vendor/autoload.php";
 
-use kfilin\Calendar\Month;
+use Kfilin\Calendar\Month;
 
 $m = new Month();
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace kfilin\Calendar;
+namespace Kfilin\Calendar;
 
-class Period 
+class Period
 {
     /**
      *
@@ -15,7 +15,7 @@ class Period
      * @var Date
      */
     protected $dt2;
-    
+
     function __construct(Date $dt1, Date $dt2) {
         $this->dt1 = $dt1;
         $this->dt2 = $dt2;
@@ -25,17 +25,17 @@ class Period
     {
         return new self(Date::createFromString($dt1), Date::createFromString($dt2));
     }
-    
-    public function contains($dt, $dtFrom, $dtTo) 
+
+    public function contains($dt, $dtFrom, $dtTo)
     {
         if (!$dt instanceof \DateTime) {
             $dt = new \DateTime($dt);
         }
-        
+
         if (!$dt) {
             throw new \InvalidArgumentException("Invalid argument \$dt");
         }
-        
+
         $dtFromObj = new \DateTime($dtFrom);
 
         if (!$dtFromObj) {
@@ -59,7 +59,7 @@ class Period
         if ($dtToObj >= $dt) {
             return true;
         }
-        
+
         return false;
     }
 }

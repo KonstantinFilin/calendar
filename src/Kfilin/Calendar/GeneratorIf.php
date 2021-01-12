@@ -1,6 +1,6 @@
 <?php
 
-namespace kfilin\Calendar;
+namespace Kfilin\Calendar;
 
 interface GeneratorIf {
     public function make();

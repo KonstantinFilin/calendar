@@ -1,40 +1,40 @@
 <?php
 
-namespace kfilin\Calendar;
+namespace Kfilin\Calendar;
 
-class Month 
+class Month
 {
     protected $year;
     protected $month;
-    
+
     public static function createFromPeriod($period)
     {
         if (strlen($period) != 6) {
             throw new \InvalidArgumentException("Period must be 6 chars long: " . $period);
         }
-        
+
         $y = substr($period, 0, 4);
         $m = substr($period, -2);
-        
+
         return new self($y, $m);
     }
-    
+
     public static function createFromDt($dt)
     {
-        list($y, $m, ) = explode('-', $dt, 3);        
+        list($y, $m, ) = explode('-', $dt, 3);
         return new self($y, $m);
     }
 
     function __construct($year = 0, $month = 0) {
-        
+
         if (!$year) {
             $year = date("Y");
         }
-        
+
         if (!$month) {
             $month = date("m");
         }
-        
+
         $this->year = intval($year);
         $this->month = intval($month);
 
@@ -43,43 +43,43 @@ class Month
         }
     }
 
-    public function getFullFromDayNum($dayNum) 
+    public function getFullFromDayNum($dayNum)
     {
         $dayNumInt = intval($dayNum);
-        
+
         return $this->getYear() . "-" . $this->getMonth() . "-" . ( $dayNumInt < 10 ? "0" . $dayNumInt : $dayNumInt );
     }
-    
+
     public function isMonday($dayNum)
     {
         return $this->getWeekdayNum($dayNum) == 1;
     }
-    
+
     public function isTuesday($dayNum)
     {
         return $this->getWeekdayNum($dayNum) == 2;
     }
-    
+
     public function isWednesday($dayNum)
     {
         return $this->getWeekdayNum($dayNum) == 3;
     }
-    
+
     public function isThursday($dayNum)
     {
         return $this->getWeekdayNum($dayNum) == 4;
     }
-    
+
     public function isFriday($dayNum)
     {
         return $this->getWeekdayNum($dayNum) == 5;
     }
-    
+
     public function isSaturday($dayNum)
     {
         return $this->getWeekdayNum($dayNum) == 6;
     }
-    
+
     public function isSunday($dayNum)
     {
         return $this->getWeekdayNum($dayNum) == 7;
@@ -89,7 +89,7 @@ class Month
     {
         $weekdayNum = $this->getWeekdayNum($dayNum);
         $weekdayNames = $this->getWeekdayNames();
-        
+
         return $weekdayNames[$weekdayNum];
     }
 
@@ -97,7 +97,7 @@ class Month
     {
         $weekdayNum = $this->getWeekdayNum($dayNum);
         $weekdayNames = $this->getWeekdayNamesShort();
-        
+
         return $weekdayNames[$weekdayNum];
     }
 
@@ -161,11 +161,11 @@ class Month
     {
         $ret = [];
         $maxDay = $this->getMaxDay();
-        
+
         for($day=1; $day<= $maxDay; $day++) {
             $ret[$day] = $this->getWeekdayNum($day);
         }
-        
+
         return $ret;
     }
 
@@ -187,7 +187,7 @@ class Month
             3 => 31,
             4 => 30,
             5 => 31,
-            6 => 30, 
+            6 => 30,
             7 => 31,
             8 => 31,
             9 => 30,
@@ -195,14 +195,14 @@ class Month
             11 => 30,
             12 => 31
         ];
-        
+
         if ($this->year%400 == 0 || ($this->year%4 == 0 && $this->year%100 !== 0)) {
             $ret[2] = 29;
         }
-        
+
         return $ret[$this->month];
     }
-    
+
     public function isPast()
     {
         $curY = intval(date("Y"));
@@ -210,7 +210,7 @@ class Month
 
         return $curY > $this->year || ($curY == $this->year && $curM > $this->month);
     }
-    
+
     public function isFuture()
     {
         $curY = intval(date("Y"));
@@ -218,22 +218,22 @@ class Month
 
         return $curY < $this->year || ($curY == $this->year && $curM < $this->month);
     }
-    
+
     public function isCurrent()
     {
         $curY = intval(date("Y"));
         $curM = intval(date("m"));
-        
+
         return $this->year == $curY && $this->month == $curM;
     }
-    
+
     public function getName()
     {
         $monthNames = $this->getMonthNames();
         $monthName = isset($monthNames[$this->month]) ? $monthNames[$this->month] : "???";
         return $monthName . " " . $this->year;
     }
-    
+
     public function getNameShort()
     {
         $monthNames = $this->getMonthNames();
@@ -245,23 +245,23 @@ class Month
     {
         return $this->getPrevMonth();
     }
-    
+
     public function getPrevMonth()
     {
         $m = $this->month;
         $y = $this->year;
-        
+
         if ($m == 1) {
             $m = 12;
             $y--;
         } else {
             $m--;
         }
-        
+
         if ($m < 10) {
             $m = "0" . $m;
         }
-        
+
         return new self($y, $m);
     }
 
@@ -269,31 +269,31 @@ class Month
     {
         return $this->getNextMonth();
     }
-    
+
     public function getNextMonth()
     {
         $m = $this->month;
         $y = $this->year;
-        
+
         if ($m == 12) {
             $m = 1;
             $y++;
         } else {
             $m++;
         }
-        
+
         if ($m < 10) {
             $m = "0" . $m;
         }
-        
+
         return new self($y, $m);
     }
-    
+
     public function __toString()
     {
         return $this->getYear() . $this->getMonth();
     }
-    
+
     public function getYear() {
         return $this->year;
     }
@@ -301,7 +301,7 @@ class Month
     public function getMonth() {
         return $this->month < 10 ? "0" . $this->month : $this->month;
     }
-    
+
     public function hasDt($dt)
     {
         $monthOth = self::createFromDt($dt);

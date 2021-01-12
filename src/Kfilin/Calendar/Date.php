@@ -1,13 +1,13 @@
 <?php
 
-namespace kfilin\Calendar;
+namespace Kfilin\Calendar;
 
-class Date 
+class Date
 {
     protected $day;
     protected $month;
     protected $year;
-    
+
     function __construct($year, $month, $day ) {
         $this->day = $day;
         $this->month = $month;
@@ -17,10 +17,10 @@ class Date
     public function getWeekdayNum()
     {
         $dtObj = $this->getAsPhpObject();
-        
+
         return $dtObj->format("N");
     }
-    
+
     public function getPrev($days = 1)
     {
         $dtObj = new \DateTime((string) $this);
@@ -43,20 +43,20 @@ class Date
             $this->day
         ];
     }
-    
+
     public function getAsPhpObject()
     {
         return new \DateTime((string) $this);
     }
-    
+
     public function __toString() {
         return $this->year . "-" . $this->month . "-" . $this->day;
     }
-   
+
     public static function createFromString($date)
     {
         list($year, $month, $day) = explode("-", $date);
-        
+
         return new self($year, $month, $day);
     }
 }
