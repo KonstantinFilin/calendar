@@ -2,7 +2,7 @@
 
 namespace Kfilin\Calendar\Generator;
 
-class Workdays implements \kfilin\Calendar\GeneratorIf
+class Workdays implements \GeneratorIf
 {
     /**
      *

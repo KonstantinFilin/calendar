@@ -1,8 +1,8 @@
 <?php
 
-namespace Kfilin\Calendar\ru;
+namespace Kfilin\Calendar\Ru;
 
-class Month extends \kfilin\Calendar\Month
+class Month extends \Month
 {
     public function getWeekdayNamesShort()
     {
